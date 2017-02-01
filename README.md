@@ -6,8 +6,12 @@
 First, install [Yeoman](http://yeoman.io) and generator-wordpress-plugin-altimea using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo
-npm install -g generator-wordpress-plugin-altimea
+sudo npm install -g yo
+```
+Clone the repository then enter the directory:
+
+```bash
+sudo npm link
 ```
 
 Then generate your new project:
