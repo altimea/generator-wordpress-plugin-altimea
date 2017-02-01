@@ -14,6 +14,11 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'pluginName',
       message: '¿Qué nombre le quieres dar al plugin?',
+      default: 'My Altimea Plugin'
+    },{
+      type: 'input',
+      name: 'pluginSlashName',
+      message: 'Nombre de ficheros del plugin',
       default: 'altimea-myplugin'
     },{
       type: 'input',
@@ -39,13 +44,13 @@ module.exports = yeoman.Base.extend({
       this.fs.copyTpl(
         this.templatePath('config/_package.json'),
         this.destinationPath('package.json'), {
-          name: this.props.pluginName
+          name: this.props.pluginSlashName
         }
       );
       this.fs.copyTpl(
         this.templatePath('config/_bower.json'),
         this.destinationPath('bower.json'), {
-          name: this.props.pluginName
+          name: this.props.pluginSlashName
         }
       );
       this.fs.copy(
@@ -74,14 +79,95 @@ module.exports = yeoman.Base.extend({
     //Copy the configuration files
     app: function () {
       this.fs.copyTpl(
-        this.templatePath('plugin-files/**'),
+        this.templatePath('src/**'),
         this.destinationPath(), 
         {
-          name: this.props.pluginName,
-          name_function: this.props.pluginName.replace('-', '_'),
+          pretty_name: this.props.pluginName,
+          name: this.props.pluginSlashName,
+          name_function: this.props.pluginSlashName.replace('-', '_'),
           name_class: this.props.className,
           description: this.props.pluginDescription
         }
+      );
+
+      /**
+       * admin
+       */
+      this.fs.move(
+        this.destinationPath('admin/css/plugin-name-admin.css'),
+        this.destinationPath('admin/css/' + this.props.pluginSlashName + '-admin.css')
+      );
+      this.fs.move(
+        this.destinationPath('admin/js/plugin-name-admin.js'),
+        this.destinationPath('admin/js/' + this.props.pluginSlashName + '-admin.js')
+      );
+      this.fs.move(
+        this.destinationPath('admin/partials/plugin-name-admin-display.php'),
+        this.destinationPath('admin/partials/' + this.props.pluginSlashName + '-admin-display.php')
+      );
+      this.fs.move(
+        this.destinationPath('admin/class-plugin-name-admin.php'),
+        this.destinationPath('admin/class-' + this.props.pluginSlashName + '-admin.php')
+      );
+
+      /**
+       * includes
+       */
+      this.fs.move(
+        this.destinationPath('includes/class-plugin-name-activator.php'),
+        this.destinationPath('includes/class-' + this.props.pluginSlashName + '-activator.php')
+      );
+      this.fs.move(
+        this.destinationPath('includes/class-plugin-name-deactivator.php'),
+        this.destinationPath('includes/class-' + this.props.pluginSlashName + '-deactivator.php')
+      );
+      this.fs.move(
+        this.destinationPath('includes/class-plugin-name-i18n.php'),
+        this.destinationPath('includes/class-' + this.props.pluginSlashName + '-i18n.php')
+      );
+      this.fs.move(
+        this.destinationPath('includes/class-plugin-name-loader.php'),
+        this.destinationPath('includes/class-' + this.props.pluginSlashName + '-loader.php')
+      );
+      this.fs.move(
+        this.destinationPath('includes/class-plugin-name.php'),
+        this.destinationPath('includes/class-' + this.props.pluginSlashName + '.php')
+      );
+
+      /**
+       * languages
+       */
+      this.fs.move(
+        this.destinationPath('languages/plugin-name.pot'),
+        this.destinationPath('languages/' + this.props.pluginSlashName + '.pot')
+      );
+
+      /**
+       * public
+       */
+      this.fs.move(
+        this.destinationPath('public/css/plugin-name-public.css'),
+        this.destinationPath('public/css/' + this.props.pluginSlashName + '-public.css')
+      );
+      this.fs.move(
+        this.destinationPath('public/js/plugin-name-public.js'),
+        this.destinationPath('public/js/' + this.props.pluginSlashName + '-public.js')
+      );
+      this.fs.move(
+        this.destinationPath('public/partials/plugin-name-public-display.php'),
+        this.destinationPath('public/partials/' + this.props.pluginSlashName + '-public-display.php')
+      );
+      this.fs.move(
+        this.destinationPath('public/class-plugin-name-public.php'),
+        this.destinationPath('public/class-' + this.props.pluginSlashName + '-public.php')
+      );
+
+      /**
+       * Root
+       */
+      this.fs.move(
+        this.destinationPath('plugin-name.php'),
+        this.destinationPath(this.props.pluginSlashName + '.php')
       );
     },
 

@@ -1,0 +1,132 @@
+/**
+ * Classes to help you in your work
+ */
+
+.upper{
+    text-transform: uppercase;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.text-normal{
+	text-transform: none !important;
+}
+.text-center {
+	text-align: center;
+}
+.text-bold{
+	font-weight: bold !important;
+}
+.round{
+    border-radius: 50%;
+}
+// btn helpers
+.btn-square{
+    border-radius: 0 !important;
+}
+.btn-rounded{
+    border-radius: 50px !important;
+}
+
+// font sizes text
+.fz-13{
+	font-size: 13px;
+}
+.fz-14{
+	font-size: 14px;
+}
+.fz-15{
+	font-size: 15px;
+}
+.fz-16{
+	font-size: 16px;
+}
+// margins helpers
+// margin yops
+.mt-0{
+	margin-top: 0px !important;
+}
+.mt-5{
+	margin-top: 5px;
+}
+.mt-10{
+	margin-top: 10px;
+}
+.mt-15{
+	margin-top: 15px;
+}
+.mt-20{
+	margin-top: 20px;
+}
+.mt-25{
+	margin-top: 25px;
+}
+.mt-30{
+	margin-top: 30px;
+}
+.mt-50{
+	margin-top: 50px;
+}
+// margin-bottoms
+.mb-0{
+	margin-bottom: 0px !important;
+}
+.mb-5{
+	margin-bottom: 5px;
+}
+.mb-10{
+	margin-bottom: 10px;
+}
+.mb-15{
+	margin-bottom: 15px;
+}
+.mb-20{
+	margin-bottom: 20px;
+}
+.mb-25{
+	margin-bottom: 25px;
+}
+.mb-30{
+	margin-bottom: 30px;
+}
+
+.ml-10{
+	margin-left: 10px !important;
+}
+.ml-20{
+	margin-left: 20px !important;
+}
+.ml-30{
+	margin-left: 30px !important;
+}
+.ml-40{
+	margin-left: 40px !important;
+}
+
+.mr-10{
+	margin-right: 10px !important;
+}
+.mr-20{
+	margin-right: 20px !important;
+}
+.mr-30{
+	margin-right: 30px !important;
+}
+
+.inline{
+	display: inline-block !important;
+}
+
+.posr{
+	position: relative;
+}
+
+.no-resize{
+    resize: none;
+}
+.hidden-xxs{
+	display: none;
+}
+.visible-xxs{
+	display: block;
+}
