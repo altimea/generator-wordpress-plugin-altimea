@@ -48,6 +48,12 @@ module.exports = yeoman.Base.extend({
         }
       );
       this.fs.copyTpl(
+        this.templatePath('config/_gulpfile.js'),
+        this.destinationPath('gulpfile.js'), {
+          name: this.props.pluginSlashName
+        }
+      );
+      this.fs.copyTpl(
         this.templatePath('config/_bower.json'),
         this.destinationPath('bower.json'), {
           name: this.props.pluginSlashName
