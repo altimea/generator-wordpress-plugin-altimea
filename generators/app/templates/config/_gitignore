@@ -16,7 +16,4 @@ Thumbs.db
 ## Development
 .sass-cache
 node_modules
-vendor
-!src/scss/vendor
-build
-bower_components
+src/temp
