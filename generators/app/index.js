@@ -30,6 +30,11 @@ module.exports = yeoman.Base.extend({
       name: 'className',
       message: '¿Qué nombre le quieres dar a la Class del plugin? (usar camelCase)',
       default: 'AltimeaMyPlugin'
+    },{
+      type: 'input',
+      name: 'urlProxy',
+      message: '¿Url localhost del proyecto? ejm: local.app.com, localhost/proyect-name',
+      default: 'local.app.com'
     }];
 
     return this.prompt(prompts).then(function (props) {
@@ -50,18 +55,9 @@ module.exports = yeoman.Base.extend({
       this.fs.copyTpl(
         this.templatePath('config/_gulpfile.js'),
         this.destinationPath('gulpfile.js'), {
-          name: this.props.pluginSlashName
+          name: this.props.pluginSlashName,
+          urlProxy: this.props.urlProxy
         }
-      );
-      this.fs.copyTpl(
-        this.templatePath('config/_bower.json'),
-        this.destinationPath('bower.json'), {
-          name: this.props.pluginSlashName
-        }
-      );
-      this.fs.copy(
-        this.templatePath('config/bowerrc'),
-        this.destinationPath('.bowerrc')
       );
       this.fs.copy(
         this.templatePath('config/_editorconfig'),
@@ -86,7 +82,7 @@ module.exports = yeoman.Base.extend({
     app: function () {
       this.fs.copyTpl(
         this.templatePath('src/**'),
-        this.destinationPath(), 
+        this.destinationPath(),
         {
           pretty_name: this.props.pluginName,
           name: this.props.pluginSlashName,
@@ -152,14 +148,6 @@ module.exports = yeoman.Base.extend({
        * public
        */
       this.fs.move(
-        this.destinationPath('public/css/plugin-name-public.css'),
-        this.destinationPath('public/css/' + this.props.pluginSlashName + '-public.css')
-      );
-      this.fs.move(
-        this.destinationPath('public/js/plugin-name-public.js'),
-        this.destinationPath('public/js/' + this.props.pluginSlashName + '-public.js')
-      );
-      this.fs.move(
         this.destinationPath('public/partials/plugin-name-public-display.php'),
         this.destinationPath('public/partials/' + this.props.pluginSlashName + '-public-display.php')
       );
@@ -180,6 +168,8 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
-    this.installDependencies();
+    this.installDependencies({
+        bower: false
+    });
   }
 });
