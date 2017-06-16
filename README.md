@@ -26,5 +26,5 @@ Extra functions
 Useful for not install all dependencies by (npm, gulp, bower)
 
 ```bash
-yo wordpress-plugin-altimea --skyp-install
+yo wordpress-plugin-altimea --skip-install
 ```
