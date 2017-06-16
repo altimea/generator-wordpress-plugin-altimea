@@ -4,6 +4,14 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.Base.extend({
+	constructor: function () {
+		yeoman.Base.apply(this, arguments);
+
+		this.option('skip-install', {
+			desc: 'Omite la instalación de dependencias',
+			type: Boolean
+		});
+	},
 	prompting: function () {
 		// Have Yeoman greet the user.
 		this.log(yosay(
@@ -11,6 +19,19 @@ module.exports = yeoman.Base.extend({
 		));
 
 		var prompts = [{
+			type: 'checkbox',
+			name: 'features',
+			message: '¿Que componentes de gustaria incluir?',
+			choices: [{
+				name: 'Admin',
+				value: 'includeAdmin',
+				checked: true
+			}, {
+				name: 'Public',
+				value: 'includePublic',
+				checked: false
+			}],
+		},{
 			type: 'input',
 			name: 'pluginName',
 			message: '¿Qué nombre le quieres dar al plugin?',
@@ -37,12 +58,24 @@ module.exports = yeoman.Base.extend({
 			default: 'local.app.com'
 		}];
 
-		return this.prompt(prompts).then(function (props) {
-			// To access props later use this.props.someAnswer;
-			this.props = props;
-		}.bind(this));
+
+		return this.prompt(prompts).then(answers => {
+			const features = answers.features;
+			const hasFeature = feat => features && features.indexOf(feat) !== -1;
+
+			// manually deal with the response, get back and store the results.
+			// we change a bit this way of doing to automatically do this in the self.prompt() method.
+			this.props = answers;
+			this.includeAdmin = hasFeature('includeAdmin');
+			this.includePublic = hasFeature('includePublic');
+			// set to componentAdmin to true: when you do not select anything
+			if (this.includeAdmin === false && this.includePublic === false) {
+				this.includeAdmin = true;
+			}
+		});
 	},
 
+	//Writing Logic here
 	writing: {
 		//Copy the configuration files
 		config: function () {
@@ -79,96 +112,118 @@ module.exports = yeoman.Base.extend({
 
 		//Copy the configuration files
 		app: function () {
-			this.fs.copyTpl(
-				this.templatePath('src/**'),
-				this.destinationPath(),
-				{
-					pretty_name: this.props.pluginName,
-					name: this.props.pluginSlashName,
-					name_function: this.props.pluginSlashName.replace('-', '_'),
-					name_class: this.props.className,
-					description: this.props.pluginDescription
-				}
-			);
+
+			var params = {
+				pretty_name: this.props.pluginName,
+				name: this.props.pluginSlashName,
+				name_function: this.props.pluginSlashName.replace('-', '_'),
+				name_class: this.props.className,
+				description: this.props.pluginDescription,
+				includeAdmin: this.includeAdmin,
+				includePublic: this.includePublic
+			};
 
 			/**
 			* admin
 			*/
-			this.fs.move(
-				this.destinationPath('admin/css/plugin-name-admin.css'),
-				this.destinationPath('admin/css/' + this.props.pluginSlashName + '-admin.css')
-			);
-			this.fs.move(
-				this.destinationPath('admin/js/plugin-name-admin.js'),
-				this.destinationPath('admin/js/' + this.props.pluginSlashName + '-admin.js')
-			);
-			this.fs.move(
-				this.destinationPath('admin/partials/plugin-name-admin-display.php'),
-				this.destinationPath('admin/partials/' + this.props.pluginSlashName + '-admin-display.php')
-			);
-			this.fs.move(
-				this.destinationPath('admin/class-plugin-name-admin.php'),
-				this.destinationPath('admin/class-' + this.props.pluginSlashName + '-admin.php')
-			);
-
+			if (this.includeAdmin) {
+				this.fs.copyTpl(
+					this.templatePath('src/admin/css/plugin-name-admin.css'),
+					this.destinationPath('admin/css/' + this.props.pluginSlashName + '-admin.css'),
+					params
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/admin/js/plugin-name-admin.js'),
+					this.destinationPath('admin/js/' + this.props.pluginSlashName + '-admin.js'),
+					params
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/admin/partials/plugin-name-admin-display.php'),
+					this.destinationPath('admin/partials/' + this.props.pluginSlashName + '-admin-display.php'),
+					params
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/admin/class-plugin-name-admin.php'),
+					this.destinationPath('admin/class-' + this.props.pluginSlashName + '-admin.php'),
+					params
+				);
+			}
 			/**
 			* includes
 			*/
-			this.fs.move(
-				this.destinationPath('includes/class-plugin-name-activator.php'),
-				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-activator.php')
+			this.fs.copyTpl(
+				this.templatePath('src/includes/class-plugin-name-activator.php'),
+				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-activator.php'),
+				params
 			);
-			this.fs.move(
-				this.destinationPath('includes/class-plugin-name-deactivator.php'),
-				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-deactivator.php')
+			this.fs.copyTpl(
+				this.templatePath('src/includes/class-plugin-name-deactivator.php'),
+				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-deactivator.php'),
+				params
 			);
-			this.fs.move(
-				this.destinationPath('includes/class-plugin-name-i18n.php'),
-				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-i18n.php')
+			this.fs.copyTpl(
+				this.templatePath('src/includes/class-plugin-name-i18n.php'),
+				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-i18n.php'),
+				params
 			);
-			this.fs.move(
-				this.destinationPath('includes/class-plugin-name-loader.php'),
-				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-loader.php')
+			this.fs.copyTpl(
+				this.templatePath('src/includes/class-plugin-name-loader.php'),
+				this.destinationPath('includes/class-' + this.props.pluginSlashName + '-loader.php'),
+				params
 			);
-			this.fs.move(
-				this.destinationPath('includes/class-plugin-name.php'),
-				this.destinationPath('includes/class-' + this.props.pluginSlashName + '.php')
+			this.fs.copyTpl(
+				this.templatePath('src/includes/class-plugin-name.php'),
+				this.destinationPath('includes/class-' + this.props.pluginSlashName + '.php'),
+				params
 			);
-
 			/**
 			* languages
 			*/
-			this.fs.move(
-				this.destinationPath('languages/plugin-name.pot'),
-				this.destinationPath('languages/' + this.props.pluginSlashName + '.pot')
+			this.fs.copyTpl(
+				this.templatePath('src/languages/plugin-name.pot'),
+				this.destinationPath('languages/' + this.props.pluginSlashName + '.pot'),
+				params
 			);
-
 			/**
 			* public
 			*/
-			this.fs.move(
-				this.destinationPath('public/partials/plugin-name-public-display.php'),
-				this.destinationPath('public/partials/' + this.props.pluginSlashName + '-public-display.php')
-			);
-			this.fs.move(
-				this.destinationPath('public/class-plugin-name-public.php'),
-				this.destinationPath('public/class-' + this.props.pluginSlashName + '-public.php')
-			);
-
+			if (this.includePublic) {
+				this.fs.copyTpl(
+					this.templatePath('src/public/partials/plugin-name-public-display.php'),
+					this.destinationPath('public/partials/' + this.props.pluginSlashName + '-public-display.php'),
+					params
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/public/class-plugin-name-public.php'),
+					this.destinationPath('public/class-' + this.props.pluginSlashName + '-public.php'),
+					params
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/src/**'),
+					this.destinationPath(),
+					params
+				)
+			}
 			/**
 			* Root
 			*/
-			this.fs.move(
-				this.destinationPath('plugin-name.php'),
-				this.destinationPath(this.props.pluginSlashName + '.php')
+			this.fs.copyTpl(
+				this.templatePath('src/plugin-name.php'),
+				this.destinationPath(this.props.pluginSlashName + '.php'),
+				params
 			);
+
 		},
 
 	},
 
 	install: function () {
-		this.installDependencies({
-			bower: false
-		});
+
+		if (this.options['skip-install'] ) {
+			// installer all dependencies by default
+			this.installDependencies({
+				bower: false
+			});
+		}
 	}
 });
