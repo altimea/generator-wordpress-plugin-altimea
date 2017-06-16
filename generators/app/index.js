@@ -21,7 +21,7 @@ module.exports = yeoman.Base.extend({
 		var prompts = [{
 			type: 'checkbox',
 			name: 'features',
-			message: '¿Qué componente le gustaria incluir?',
+			message: '¿Qué componente le gustaría incluir?',
 			choices: [{
 				name: 'Admin',
 				value: 'includeAdmin',
@@ -200,7 +200,7 @@ module.exports = yeoman.Base.extend({
 				);
 				this.fs.copyTpl(
 					this.templatePath('src/src/**'),
-					this.destinationPath(),
+					this.destinationPath('src'),
 					params
 				)
 			}
@@ -210,6 +210,11 @@ module.exports = yeoman.Base.extend({
 			this.fs.copyTpl(
 				this.templatePath('src/plugin-name.php'),
 				this.destinationPath(this.props.pluginSlashName + '.php'),
+				params
+			);
+			this.fs.copyTpl(
+				this.templatePath('src/uninstall.php'),
+				this.destinationPath('uninstall.php'),
 				params
 			);
 

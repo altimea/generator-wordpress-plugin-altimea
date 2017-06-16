@@ -20,6 +20,15 @@ gulp dist
 
 ```
 
+### Error común en gulp resueltos
+
+Error: watch ENOSPC
+
+```sh
+sudo bash -c 'echo 524288 > /proc/sys/fs/inotify/max_user_watches'
+```
+
+
 ## Sass utils core
 Use sass mixin responsive helpers file in `sass/mixin/_media_queries.scss`
 
