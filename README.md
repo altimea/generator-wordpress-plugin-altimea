@@ -14,8 +14,17 @@ Clone the repository then go inside the directory:
 sudo npm link
 ```
 
-Then generate your new project:
+## Then generate your new project(:
 
 ```bash
+mkdir myplugin
+cd myplugin
 yo wordpress-plugin-altimea
+```
+
+Extra functions
+Useful for not install all dependencies by (npm, gulp, bower)
+
+```bash
+yo wordpress-plugin-altimea --skip-install
 ```
