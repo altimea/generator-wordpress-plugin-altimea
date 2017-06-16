@@ -79,19 +79,20 @@ module.exports = yeoman.Base.extend({
 	writing: {
 		//Copy the configuration files
 		config: function () {
-			this.fs.copyTpl(
-			this.templatePath('config/_package.json'),
-			this.destinationPath('package.json'), {
-				name: this.props.pluginSlashName
+			if (this.includePublic) {
+				this.fs.copyTpl(
+					this.templatePath('config/_package.json'),
+					this.destinationPath('package.json'), {
+						name: this.props.pluginSlashName
+				});
+				this.fs.copyTpl(
+					this.templatePath('config/_gulpfile.js'),
+					this.destinationPath('gulpfile.js'), {
+						name: this.props.pluginSlashName,
+						urlProxy: this.props.urlProxy
+				});
 			}
-			);
-			this.fs.copyTpl(
-			this.templatePath('config/_gulpfile.js'),
-			this.destinationPath('gulpfile.js'), {
-				name: this.props.pluginSlashName,
-				urlProxy: this.props.urlProxy
-			}
-			);
+
 			this.fs.copy(
 			this.templatePath('config/_editorconfig'),
 			this.destinationPath('.editorconfig')
@@ -208,13 +209,23 @@ module.exports = yeoman.Base.extend({
 			* Root
 			*/
 			this.fs.copyTpl(
-				this.templatePath('src/plugin-name.php'),
-				this.destinationPath(this.props.pluginSlashName + '.php'),
+				this.templatePath('src/index.php'),
+				this.destinationPath('index.php'),
+				params
+			);
+			this.fs.copyTpl(
+				this.templatePath('src/README.md'),
+				this.destinationPath('README.md'),
 				params
 			);
 			this.fs.copyTpl(
 				this.templatePath('src/uninstall.php'),
 				this.destinationPath('uninstall.php'),
+				params
+			);
+			this.fs.copyTpl(
+				this.templatePath('src/plugin-name.php'),
+				this.destinationPath(this.props.pluginSlashName + '.php'),
 				params
 			);
 
