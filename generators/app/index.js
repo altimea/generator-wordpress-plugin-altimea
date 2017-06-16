@@ -21,7 +21,7 @@ module.exports = yeoman.Base.extend({
 		var prompts = [{
 			type: 'checkbox',
 			name: 'features',
-			message: '¿Qué componente le gustaria incluir?',
+			message: '¿Qué componente le gustaría incluir?',
 			choices: [{
 				name: 'Admin',
 				value: 'includeAdmin',
