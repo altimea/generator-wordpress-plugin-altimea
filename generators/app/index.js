@@ -55,7 +55,8 @@ module.exports = yeoman.Base.extend({
 			type: 'input',
 			name: 'urlProxy',
 			message: '¿Url localhost del proyecto? ejm: local.app.com, localhost/proyect-name',
-			default: 'local.app.com'
+			default: 'local.app.com',
+			when: answers => answers.features.indexOf('includePublic') !== -1
 		}];
 
 
