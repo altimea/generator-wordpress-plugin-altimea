@@ -236,11 +236,13 @@ module.exports = yeoman.Base.extend({
 
 	install: function () {
 
-		if (this.options['skip-install'] === false) {
-			// installer all dependencies by default
-			this.installDependencies({
-				bower: false
-			});
+		if (this.includePublic === true) {
+			if (this.options['skip-install'] === false) {
+				// installer all dependencies by default
+				this.installDependencies({
+					bower: false
+				});
+			}
 		}
 	}
 });
