@@ -80,7 +80,7 @@ gulp.task('styles:dev', function(){
 gulp.task('styles:dist', function(){
   var processors = [
     autoprefixer({browsers: ['> 3%', 'last 2 versions', 'ie 9', 'ios 6', 'android 4']}),
-    cssnano()
+    cssnano({zindex: false})
   ];
 
   gulp.src(src + 'scss/**/*.scss')
