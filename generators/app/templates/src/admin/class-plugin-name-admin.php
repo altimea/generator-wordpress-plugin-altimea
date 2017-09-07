@@ -20,7 +20,7 @@
  * @subpackage <%= name_class %>/admin
  * @author     Altimea <apps@altimea.com>
  */
-class <%= name_class %>_Admin {
+class <%= name_class %>Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,10 +65,10 @@ class <%= name_class %>_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in <%= name_class %>_Loader as all of the hooks are defined
+		 * defined in <%= name_class %>Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The <%= name_class %>_Loader will then create the relationship
+		 * The <%= name_class %>Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -88,10 +88,10 @@ class <%= name_class %>_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in <%= name_class %>_Loader as all of the hooks are defined
+		 * defined in <%= name_class %>Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The <%= name_class %>_Loader will then create the relationship
+		 * The <%= name_class %>Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */

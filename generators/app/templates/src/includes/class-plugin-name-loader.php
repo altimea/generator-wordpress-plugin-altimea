@@ -21,7 +21,7 @@
  * @subpackage <%= name_class %>/includes
  * @author     Altimea <apps@altimea.com>
  */
-class <%= name_class %>_Loader {
+class <%= name_class %>Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function activate_<%= name_function %>() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-<%= name %>-activator.php';
-	<%= name_class %>_Activator::activate();
+	<%= name_class %>Activator::activate();
 }
 
 /**
@@ -45,7 +45,7 @@ function activate_<%= name_function %>() {
  */
 function deactivate_<%= name_function %>() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-<%= name %>-deactivator.php';
-	<%= name_class %>_Deactivator::deactivate();
+	<%= name_class %>Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_<%= name_function %>' );

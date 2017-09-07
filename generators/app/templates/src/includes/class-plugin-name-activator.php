@@ -20,7 +20,7 @@
  * @subpackage <%= name_class %>/includes
  * @author     Altimea <apps@altimea.com>
  */
-class <%= name_class %>_Activator {
+class <%= name_class %>Activator {
 
 	/**
 	 * Short Description. (use period)

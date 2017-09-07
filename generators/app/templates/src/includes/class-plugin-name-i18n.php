@@ -24,7 +24,7 @@
  * @subpackage <%= name_class %>/includes
  * @author     Altimea <apps@altimea.com>
  */
-class <%= name_class %>_i18n {
+class <%= name_class %>i18n {
 
 
 	/**

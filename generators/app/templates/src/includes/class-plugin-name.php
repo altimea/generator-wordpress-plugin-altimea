@@ -35,7 +35,7 @@ class <%= name_class %> {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      <%= name_class %>_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      <%= name_class %>Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -83,10 +83,10 @@ class <%= name_class %> {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - <%= name_class %>_Loader. Orchestrates the hooks of the plugin.
-	 * - <%= name_class %>_i18n. Defines internationalization functionality.<% if (includeAdmin) { %>
-	 * - <%= name_class %>_Admin. Defines all hooks for the admin area.<% } %><% if (includePublic) { %>
-	 * - <%= name_class %>_Public. Defines all hooks for the public side of the site.<% } %>
+	 * - <%= name_class %>Loader. Orchestrates the hooks of the plugin.
+	 * - <%= name_class %>i18n. Defines internationalization functionality.<% if (includeAdmin) { %>
+	 * - <%= name_class %>Admin. Defines all hooks for the admin area.<% } %><% if (includePublic) { %>
+	 * - <%= name_class %>Public. Defines all hooks for the public side of the site.<% } %>
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -119,14 +119,14 @@ class <%= name_class %> {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-<%= name %>-public.php';<% } %>
 
-		$this->loader = new <%= name_class %>_Loader();
+		$this->loader = new <%= name_class %>Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the <%= name_class %>_i18n class in order to set the domain and to register the hook
+	 * Uses the <%= name_class %>i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -134,7 +134,7 @@ class <%= name_class %> {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new <%= name_class %>_i18n();
+		$plugin_i18n = new <%= name_class %>i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -149,7 +149,7 @@ class <%= name_class %> {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new <%= name_class %>_Admin( $this->get_<%= name_function %>(), $this->get_version() );
+		$plugin_admin = new <%= name_class %>Admin( $this->get_<%= name_function %>(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -165,7 +165,7 @@ class <%= name_class %> {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new <%= name_class %>_Public( $this->get_<%= name_function %>(), $this->get_version() );
+		$plugin_public = new <%= name_class %>Public( $this->get_<%= name_function %>(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -196,7 +196,7 @@ class <%= name_class %> {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    <%= name_class %>_Loader    Orchestrates the hooks of the plugin.
+	 * @return    <%= name_class %>Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
