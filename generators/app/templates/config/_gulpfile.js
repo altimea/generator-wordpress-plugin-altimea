@@ -3,6 +3,7 @@ var src = './src/';
 var dist = './public/assets/';
 var proxyUrl = '<%= urlProxy %>';
 var localPort = 3005;
+var destJSFile = '<%= name %>-main.js';
 
 
 // my scripts: default load all script of folder js/*
@@ -22,20 +23,25 @@ var plugins = [
 
 // define package
 var gulp = require('gulp'),
-  plumber = require('gulp-plumber'),
-  uglify = require('gulp-uglify'),
-  concat = require('gulp-concat'),
-  eslint = require('gulp-eslint'),
-  sass = require('gulp-sass'),
-  postcss = require('gulp-postcss'),
-  autoprefixer = require('autoprefixer'),
-  cssnano = require('cssnano'),
-  sourcemaps = require('gulp-sourcemaps'),
-  browserSync = require('browser-sync').create(),
-  reload = browserSync.reload,
-  imagemin = require('gulp-imagemin'),
-  wpPot = require('gulp-wp-pot');
+	plumber = require('gulp-plumber'),
+	uglify = require('gulp-uglify'),
+	concat = require('gulp-concat'),
+	eslint = require('gulp-eslint'),
+	sass = require('gulp-sass'),
+	postcss = require('gulp-postcss'),
+	autoprefixer = require('autoprefixer'),
+	cssnano = require('cssnano'),
+	sourcemaps = require('gulp-sourcemaps'),
+	browserSync = require('browser-sync').create(),
+	reload = browserSync.reload,
+	imagemin = require('gulp-imagemin'),
+	md5 = require('gulp-md5'),
+	del = require('del'),
+	wpPot = require('gulp-wp-pot');
 
+gulp.task('scripts-cleanup', function () {
+	del.sync([dist], {force: true});
+});
 
 // tasks
 // pot files
@@ -87,6 +93,8 @@ gulp.task('styles:dist', function(){
   .pipe(plumber())
   .pipe(sass())
   .pipe(postcss(processors))
+  .pipe(gulp.dest(dist + 'css/'))
+  .pipe(md5(10))
   .pipe(gulp.dest(dist + 'css/'));
 });
 
@@ -128,7 +136,7 @@ gulp.task('scripts:dev', function(){
   gulp.src(scriptsTemp)
   .pipe(sourcemaps.init())
   .pipe(plumber())
-  .pipe(concat('p-main.js'))
+  .pipe(concat(destJSFile))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest(dist + 'js/'));
 });
@@ -145,8 +153,10 @@ gulp.task('scripts:dist', function(){
   .pipe(plumber())
   .pipe(eslint())
   .pipe(eslint.format())
-  .pipe(concat('p-main.js'))
+  .pipe(concat(destJSFile))
   .pipe(uglify())
+  .pipe(gulp.dest(dist + 'js/'))
+  .pipe(md5(10))
   .pipe(gulp.dest(dist + 'js/'));
 });
 
@@ -169,6 +179,6 @@ gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images']
 gulp.task('build', ['styles:dev', 'scripts:dist', 'scripts:dev', 'static']);
 
 // gulp minify all
-gulp.task('dist', ['styles:dist', 'scripts:dist', 'scripts:dist', 'static']);
+gulp.task('dist', ['scripts-cleanup', 'styles:dist', 'scripts:dist', 'static']);
 // dev default tasks
 gulp.task('default', ['build', 'serve']);

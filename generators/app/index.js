@@ -204,7 +204,16 @@ module.exports = yeoman.Base.extend({
 					this.templatePath('src/src/**'),
 					this.destinationPath('src'),
 					params
-				)
+				);
+				this.fs.copyTpl(
+					this.templatePath('src/src/scss/plugin-name-main.scss'),
+					this.destinationPath('src/scss/' + this.props.pluginSlashName + '-main.scss'),
+					params
+				);
+				this.fs.delete(
+					this.destinationPath('src/scss/plugin-name-main.scss'),
+					params
+				);
 			}
 			/**
 			* Root

@@ -73,7 +73,10 @@ class <%= name_class %>Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/css/p-main.css', array(), $this->version, 'all' );
+		$file_md5 = substr(md5_file(plugin_dir_url( __FILE__ ) . 'assets/css/<%= name %>-main.css'), 0, 10);
+		$file_name = WP_ENV == 'dev' ? '<%= name %>-main.css' : '<%= name %>-main_' . $file_md5 . '.css';
+
+		wp_enqueue_style( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/css/' . $file_name, array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +99,10 @@ class <%= name_class %>Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/js/p-main.js', array( 'jquery' ), $this->version, false );
+		$file_md5 = substr(md5_file(plugin_dir_url( __FILE__ ) . 'assets/js/<%= name %>-main.js'), 0, 10);
+		$file_name = WP_ENV == 'dev' ? '<%= name %>-main.js' : '<%= name %>-main_' . $file_md5 . '.js';
+
+		wp_enqueue_script( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/js/' . $file_name, array( 'jquery' ), $this->version, false );
 
 	}
 
