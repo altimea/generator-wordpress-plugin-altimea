@@ -25,7 +25,7 @@ var gulp = require('gulp'),
   plumber = require('gulp-plumber'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
-  jshint = require('gulp-jshint'),
+  eslint = require('gulp-eslint'),
   sass = require('gulp-sass'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
@@ -109,12 +109,19 @@ gulp.task('scripts:temp', function(){
   gulp.src(scripts)
   .pipe(sourcemaps.init())
   .pipe(plumber())
-  .pipe(jshint())
-  .pipe(jshint.reporter('default'))
-  .pipe(jshint.reporter('fail'))
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError())
   .pipe(concat('main.js'))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest(src + 'temp/'));
+});
+
+gulp.task('eslint:dev', function(){
+  gulp.src(scriptsTemp)
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError());
 });
 
 gulp.task('scripts:dev', function(){
@@ -126,9 +133,18 @@ gulp.task('scripts:dev', function(){
   .pipe(gulp.dest(dist + 'js/'));
 });
 
+gulp.task('eslint:dist', function(){
+	gulp.src(scriptsTemp)
+		.pipe(eslint())
+		.pipe(eslint.format())
+		.pipe(eslint.failAfterError());
+});
+
 gulp.task('scripts:dist', function(){
   gulp.src(scriptsTemp)
   .pipe(plumber())
+  .pipe(eslint())
+  .pipe(eslint.format())
   .pipe(concat('p-main.js'))
   .pipe(uglify())
   .pipe(gulp.dest(dist + 'js/'));
@@ -150,9 +166,9 @@ gulp.task('serve', function(){
 // tasks globals
 gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images']);
 // build all
-gulp.task('build', ['styles:dev', 'scripts:dev', 'static']);
+gulp.task('build', ['styles:dev', 'scripts:dist', 'scripts:dev', 'static']);
 
 // gulp minify all
-gulp.task('dist', ['styles:dist', 'scripts:dist', 'static']);
+gulp.task('dist', ['styles:dist', 'scripts:dist', 'scripts:dist', 'static']);
 // dev default tasks
 gulp.task('default', ['build', 'serve']);

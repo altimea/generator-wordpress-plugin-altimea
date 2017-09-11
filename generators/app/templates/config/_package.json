@@ -5,9 +5,12 @@
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "browser-sync": "^2.18.12",
+	"eslint": "^4.5.0",
+	"eslint-config-wordpress": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.2",
+	"gulp-eslint": "^4.0.0",
     "gulp-imagemin": "^3.2.0",
     "gulp-jshint": "^2.0.4",
     "gulp-plumber": "^1.1.0",
