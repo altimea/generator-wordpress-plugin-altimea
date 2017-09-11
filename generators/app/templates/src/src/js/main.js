@@ -1,7 +1,6 @@
-/*globals jsVars, slog, */
+/*globals jsVars*/
 
-(function($) {
-	// log
-	slog('hello plugin public');
+( function( $ ) {
 
-})(jQuery);
+	// My code
+}( jQuery ) );
