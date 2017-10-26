@@ -128,5 +128,13 @@ Mixin `minw($breakpoint)` with parameters **lg** = 1290px , **md** = 1042px , **
 
 Example `@include minw(sm){...};`  output  `@media (max-width: 768px){...};`
 
+
+## Desarrollo backend
+Agregar variables de configuración en `wp-config.php`  
+variables necesarias
+
+ 	define('WP_ENV', 'dev');
+
+
 ## Contributors
 @Altimea

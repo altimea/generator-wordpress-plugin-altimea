@@ -33,19 +33,23 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-<%= name %>-activator.php
+ * @param Boolean $networkwide status multisite
+ * @return Void
  */
-function activate_<%= name_function %>() {
+function activate_<%= name_function %>($networkwide) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-<%= name %>-activator.php';
-	<%= name_class %>Activator::activate();
+	<%= name_class %>Activator::activate($networkwide);
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-<%= name %>-deactivator.php
+ * @param Boolean $networkwide status multisite
+ * @return Void
  */
-function deactivate_<%= name_function %>() {
+function deactivate_<%= name_function %>($networkwide) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-<%= name %>-deactivator.php';
-	<%= name_class %>Deactivator::deactivate();
+	<%= name_class %>Deactivator::deactivate($networkwide);
 }
 
 register_activation_hook( __FILE__, 'activate_<%= name_function %>' );
