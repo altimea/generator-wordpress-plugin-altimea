@@ -28,8 +28,9 @@ class <%= name_class %>Activator {
 	 * Long Description.
 	 *
 	 * @since    1.0.0
+	 * @return Void
 	 */
-	public static function activate() {
+	public static function activate($networkwide) {
 
 	}
 

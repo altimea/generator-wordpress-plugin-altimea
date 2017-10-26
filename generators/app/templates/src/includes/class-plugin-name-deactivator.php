@@ -28,9 +28,13 @@ class <%= name_class %>Deactivator {
 	 * Long Description.
 	 *
 	 * @since    1.0.0
+	 * @return Void
 	 */
-	public static function deactivate() {
+	public static function deactivate($networkwide) {
+		// apply logic to delete configuration data or anything
+		if (getenv('WP_ENV') === 'dev') {
 
+		}
 	}
 
 }
