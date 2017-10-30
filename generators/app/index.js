@@ -118,7 +118,7 @@ module.exports = yeoman.Base.extend({
 			var params = {
 				pretty_name: this.props.pluginName,
 				name: this.props.pluginSlashName,
-				name_function: this.props.pluginSlashName.replace('-', '_'),
+				name_function: this.props.pluginSlashName.replace(/-/g, '_'),
 				name_class: this.props.className,
 				description: this.props.pluginDescription,
 				includeAdmin: this.includeAdmin,
