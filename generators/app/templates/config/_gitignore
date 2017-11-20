@@ -17,3 +17,5 @@ Thumbs.db
 .sass-cache
 node_modules
 src/temp
+package-lock.json
+yarn.lock
