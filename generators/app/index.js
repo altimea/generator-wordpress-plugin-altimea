@@ -203,7 +203,9 @@ module.exports = yeoman.Base.extend({
 				this.fs.copyTpl(
 					this.templatePath('src/src/**'),
 					this.destinationPath('src'),
-					params
+					params,
+					{},
+					{ globOptions: { dot: true } }
 				);
 				this.fs.copyTpl(
 					this.templatePath('src/src/scss/plugin-name-main.scss'),
