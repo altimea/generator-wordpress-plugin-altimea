@@ -73,10 +73,14 @@ class <%= name_class %>Public {
 		 * class.
 		 */
 
-		$file_md5 = substr(md5_file(plugin_dir_path( __FILE__ ) . 'assets/css/<%= name %>-main.css'), 0, 10);
-		$file_name = WP_ENV == 'dev' ? '<%= name %>-main.css' : '<%= name %>-main_' . $file_md5 . '.css';
+		$fileName = '<%= name %>-main.css';
+		$newFileName = <%= name_class %>Gulpfile::getFileNameMD5( $fileName );
 
-		wp_enqueue_style( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/css/' . $file_name, array(), $this->version, 'all' );
+		if ( file_exists( plugin_dir_path( <%= constant_file %> ) . 'public/assets/css/' . $newFileName ) ) {
+			wp_enqueue_style( $this-><%= name_function %>, plugin_dir_url( <%= constant_file %> ) . 'public/assets/css/' . $newFileName, array(), $this->version, 'all' );
+		} else {
+			wp_enqueue_style( $this-><%= name_function %>, plugin_dir_url( <%= constant_file %> ) . 'public/assets/css/' . $fileName, array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -99,10 +103,14 @@ class <%= name_class %>Public {
 		 * class.
 		 */
 
-		$file_md5 = substr(md5_file(plugin_dir_path( __FILE__ ) . 'assets/js/<%= name %>-main.js'), 0, 10);
-		$file_name = WP_ENV == 'dev' ? '<%= name %>-main.js' : '<%= name %>-main_' . $file_md5 . '.js';
+		$fileName = '<%= name %>-main.js';
+		$newFileName = <%= name_class %>Gulpfile::getFileNameMD5( $fileName );
 
-		wp_enqueue_script( $this-><%= name_function %>, plugin_dir_url( __FILE__ ) . 'assets/js/' . $file_name, array( 'jquery' ), $this->version, false );
+		if ( file_exists( plugin_dir_path( <%= constant_file %> ) . 'public/assets/js/' . $newFileName ) ) {
+			wp_enqueue_script( $this-><%= name_function %>, plugin_dir_url( <%= constant_file %> ) . 'public/assets/js/' . $newFileName, array( 'jquery' ), $this->version, false );
+		} else {
+			wp_enqueue_script( $this-><%= name_function %>, plugin_dir_url( <%= constant_file %> ) . 'public/assets/js/' . $fileName, array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
