@@ -119,6 +119,7 @@ module.exports = yeoman.Base.extend({
 				pretty_name: this.props.pluginName,
 				name: this.props.pluginSlashName,
 				name_function: this.props.pluginSlashName.replace(/-/g, '_'),
+				constant_file: this.props.pluginSlashName.replace(/-/g, '_').toUpperCase() + '_FILE',
 				name_class: this.props.className,
 				description: this.props.pluginDescription,
 				includeAdmin: this.includeAdmin,
@@ -178,12 +179,26 @@ module.exports = yeoman.Base.extend({
 				this.destinationPath('includes/class-' + this.props.pluginSlashName + '.php'),
 				params
 			);
+			// all libraries
+			this.fs.copyTpl(
+				this.templatePath('src/includes/libraries/class-plugin-name-gulpfile.php'),
+				this.destinationPath('includes/libraries/class-' + this.props.pluginSlashName + '-gulpfile.php'),
+				params
+			);
 			/**
 			* languages
 			*/
 			this.fs.copyTpl(
 				this.templatePath('src/languages/plugin-name.pot'),
 				this.destinationPath('languages/' + this.props.pluginSlashName + '.pot'),
+				params
+			);
+			/**
+			* node_modules third-parties
+			*/
+			this.fs.copyTpl(
+				this.templatePath('src/node_modules_third/**'),
+				this.destinationPath('node_modules_third'),
 				params
 			);
 			/**
@@ -203,7 +218,9 @@ module.exports = yeoman.Base.extend({
 				this.fs.copyTpl(
 					this.templatePath('src/src/**'),
 					this.destinationPath('src'),
-					params
+					params,
+					{},
+					{ globOptions: { dot: true } }
 				);
 				this.fs.copyTpl(
 					this.templatePath('src/src/scss/plugin-name-main.scss'),

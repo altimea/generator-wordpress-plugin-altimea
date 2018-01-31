@@ -37,7 +37,23 @@ var gulp = require('gulp'),
 	imagemin = require('gulp-imagemin'),
 	md5 = require('gulp-md5'),
 	del = require('del'),
-	wpPot = require('gulp-wp-pot');
+	wpPot = require('gulp-wp-pot'),
+	crypto = require('crypto'),
+	fs = require('fs'),
+	mymd5 = require('./node_modules_third/gulp-mymd5/index.js');
+
+/**
+ * First task autoExecute
+ * this create a file with data json
+ */
+var dataJson = {
+	'md5': crypto.createHash('md5').update(Date.now().toString()).digest('hex').slice(0, 10)
+};
+fs.writeFile("./gulpfiledata.json", JSON.stringify(dataJson), function(err) {
+	if (err) {
+		return console.log(err);
+	}
+});
 
 gulp.task('scripts-cleanup', function () {
 	del.sync([dist], {force: true});
@@ -94,7 +110,7 @@ gulp.task('styles:dist', function(){
   .pipe(sass())
   .pipe(postcss(processors))
   .pipe(gulp.dest(dist + 'css/'))
-  .pipe(md5(10))
+  .pipe(mymd5(dataJson.md5))
   .pipe(gulp.dest(dist + 'css/'));
 });
 
@@ -156,7 +172,7 @@ gulp.task('scripts:dist', function(){
   .pipe(concat(destJSFile))
   .pipe(uglify())
   .pipe(gulp.dest(dist + 'js/'))
-  .pipe(md5(10))
+  .pipe(mymd5(dataJson.md5))
   .pipe(gulp.dest(dist + 'js/'));
 });
 

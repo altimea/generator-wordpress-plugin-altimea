@@ -1,5 +1,5 @@
 
-# <%= pretty_name %>
+# <%= pretty_name %><% if (includePublic) { %>
 
 ## Desarrollo frontend
 
@@ -126,15 +126,13 @@ Example `@include maxw(md){...};`  output  `@media (max-width: 1041px){...};`
 
 Mixin `minw($breakpoint)` with parameters **lg** = 1290px , **md** = 1042px , **sm** = 768px , **xs** = 576px.
 
-Example `@include minw(sm){...};`  output  `@media (max-width: 768px){...};`
-
+Example `@include minw(sm){...};`  output  `@media (max-width: 768px){...};`<% } %><% if (includeAdmin) { %>
 
 ## Desarrollo backend
 Agregar variables de configuración en `wp-config.php`  
 variables necesarias
 
- 	define('WP_ENV', 'dev');
-
+	define('WP_ENV', 'dev');<% } %>
 
 ## Contributors
 @Altimea

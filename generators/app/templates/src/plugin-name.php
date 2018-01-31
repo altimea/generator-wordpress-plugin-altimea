@@ -30,6 +30,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+if ( ! defined( '<%= constant_file %>' ) ) {
+	define( '<%= constant_file %>', __FILE__ );
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-<%= name %>-activator.php
@@ -59,6 +63,7 @@ register_deactivation_hook( __FILE__, 'deactivate_<%= name_function %>' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
+require plugin_dir_path( __FILE__ ) . 'includes/libraries/class-<%= name %>-gulpfile.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-<%= name %>.php';
 
 /**
