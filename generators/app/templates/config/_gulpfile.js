@@ -1,6 +1,8 @@
 // config globals
 var src = './src/';
 var dist = './public/assets/';
+var srcPug = './src/pug/**/*.pug'
+var distPartials = './public/partials/';
 var proxyUrl = '<%= urlProxy %>';
 var localPort = 3005;
 var destJSFile = '<%= name %>-main.js';
@@ -40,7 +42,9 @@ var gulp = require('gulp'),
 	wpPot = require('gulp-wp-pot'),
 	crypto = require('crypto'),
 	fs = require('fs'),
-	mymd5 = require('./node_modules_third/gulp-mymd5/index.js');
+  mymd5 = require('./node_modules_third/gulp-mymd5/index.js'),
+  rename = require('gulp-rename'),
+  pug = require('gulp-pug');
 
 /**
  * First task autoExecute
@@ -60,6 +64,17 @@ gulp.task('scripts-cleanup', function () {
 });
 
 // tasks
+//pug
+
+gulp.task('pug', function() {
+  return gulp.src(srcPug)
+      .pipe(pug({ pretty: true }))
+      .on('error', gutil.log) // Log errors instead of killing the process
+      .pipe(rename({
+          extname: '.php'
+      }))
+      .pipe(gulp.dest(distPartials))
+});
 // pot files
 gulp.task('potFiles', function () {
   gulp.src(['**/*.php'])
