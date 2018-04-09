@@ -201,11 +201,12 @@ gulp.task('serve', function(){
   gulp.watch(src + 'scss/**/*.scss', ['styles:dev']);
   gulp.watch(src + 'js/**/*.js', ['scripts:temp']);
   gulp.watch(src + 'temp/**/*.js', ['scripts:dev']).on('change', reload);
+  gulp.watch(srcPug, ['pug']).on('change', reload);
   gulp.watch('./**/*.php').on('change', reload);
 });
 
 // tasks globals
-gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images']);
+gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images', 'pug']);
 // build all
 gulp.task('build', ['styles:dev', 'scripts:dist', 'scripts:dev', 'static']);
 
