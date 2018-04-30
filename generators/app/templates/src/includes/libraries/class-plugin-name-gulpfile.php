@@ -37,7 +37,7 @@ class <%= name_class %>Gulpfile {
 	}
 
 	public static function getFileNameMD5($fileName) {
-		$dataJson = gulpfile::getDataJson();
+		$dataJson = self::getDataJson();
 		$file_md5 = !empty($dataJson['md5']) ? $dataJson['md5'] : '';
 		$newFileName = false;
 
