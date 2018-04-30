@@ -207,7 +207,7 @@ gulp.task('serve', function(){
 // tasks globals
 gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images']);
 // build all
-gulp.task('build', ['styles:dev', 'scripts:dist', 'scripts:dev', 'static']);
+gulp.task('build', ['styles:dev', 'scripts:dev', 'static']);
 
 // gulp minify all
 gulp.task('dist', ['scripts-cleanup', 'styles:dist', 'scripts:dist', 'static']);
