@@ -72,3 +72,68 @@ $mq-lg: 1290px;
     }
   }
 }
+
+//NEW MEDIA QUERIES NO BOOTSTRAP
+
+// mb = 400px
+// mbl = 740px
+//tb = 768px
+//tbl = 1024px
+//desk = 1200px
+//desklg = 1600px
+
+//  1 EM = 16PX //
+
+@mixin minw($point) {
+  @if $point == desklg{
+      @media (min-width: 100em){@content;}
+  }
+  @else if $point == desk{
+      @media (min-width: 75em) { @content ; }
+  }
+  @else if $point == tbl {
+      @media (min-width: 64em) { @content ; }
+  }
+  @else if $point == tb {
+      @media (min-width: 48em) { @content ; }
+  }
+  @else if $point == tbm {
+      @media (min-width: 40em) { @content ; }
+  }
+  @else if $point == mb{
+      @media (min-width: 30em) { @content ; }
+  }
+  @else if $point == mbland {
+      @media (min-width: 20em) and (orientation: landscape){ @content ; }
+  }
+}
+@mixin maxw($point){
+  @if $point == desklg{
+      @media (max-width: 100em){@content;}
+  }
+  @else if $point == desk{
+      @media (max-width: 75em) { @content ; }
+  }
+  @else if $point == tbl {
+      @media (max-width: 64em) { @content ; }
+  }
+  @else if $point == tb {
+      @media (max-width: 48em) { @content ; }
+  }
+  @else if $point == tbm {
+      @media (max-width: 40em) { @content ; }
+  }
+  @else if $point == mbland{
+      @media (max-width: 50em){ @content ; }
+  }
+  @else if $point == mb{
+      @media (max-width: 30em) { @content ; }
+  }
+}
+
+@mixin minwc($custom){
+  @media (min-width: $custom) { @content ; }
+}
+@mixin maxwc($custom){
+  @media (max-width: $custom) { @content ; }
+}
