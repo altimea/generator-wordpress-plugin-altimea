@@ -1,17 +1,17 @@
 // config globals
-var src = './src/';
-var dist = './public/assets/';
-var srcPug = './src/pug/**/*.pug'
-var distPartials = './public/partials/';
-var proxyUrl = '<%= urlProxy %>';
-var localPort = 3005;
-var destJSFile = '<%= name %>-main.js';
+var src = './src/',
+    dist = './public/assets/',
+    srcPug = './src/pug/**/*.pug',
+    distPartials = './public/partials/',
+    proxyUrl = '<%= urlProxy %>',
+    localPort = 3005,
+    destJSFile = '<%= name %>-main.js';
 
 
 // my scripts: default load all script of folder js/*
 var scripts = [
   src + 'js/functions.js',
-  src + 'js/main.js',
+  src + 'js/main.js'
 ];
 
 // node modules folder
@@ -58,7 +58,7 @@ fs.writeFile("./gulpfiledata.json", JSON.stringify(dataJson), function(err) {
 		return console.log(err);
 	}
 });
-
+  
 gulp.task('scripts-cleanup', function () {
 	del.sync([dist], {force: true});
 });
@@ -69,7 +69,6 @@ gulp.task('scripts-cleanup', function () {
 gulp.task('pug', function() {
   return gulp.src(srcPug)
       .pipe(pug({ pretty: true }))
-      .on('error', gutil.log) // Log errors instead of killing the process
       .pipe(rename({
           extname: '.php'
       }))
