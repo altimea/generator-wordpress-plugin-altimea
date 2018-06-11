@@ -42,30 +42,32 @@ var gulp = require('gulp'),
 	wpPot = require('gulp-wp-pot'),
 	crypto = require('crypto'),
 	fs = require('fs'),
-  mymd5 = require('./node_modules_third/gulp-mymd5/index.js'),
-  rename = require('gulp-rename'),
-  pug = require('gulp-pug');
-
-/**
- * First task autoExecute
- * this create a file with data json
- */
-var dataJson = {
-	'md5': crypto.createHash('md5').update(Date.now().toString()).digest('hex').slice(0, 10)
-};
-fs.writeFile("./gulpfiledata.json", JSON.stringify(dataJson), function(err) {
-	if (err) {
-		return console.log(err);
-	}
-});
+	mymd5 = require('./node_modules_third/gulp-mymd5/index.js'),
+	rename = require('gulp-rename'),
+	pug = require('gulp-pug'),
+	dataJson = {
+		'md5': ''
+	};
 
 gulp.task('scripts-cleanup', function () {
 	del.sync([dist], {force: true});
 });
 
-// tasks
-//pug
+/**
+ * task execute
+ * this create a file with data json
+ * create variable hash to production
+*/
+gulp.task( 'set-dataJson', function() {
+	dataJson['md5'] = crypto.createHash( 'md5' ).update( Date.now().toString() ).digest( 'hex' ).slice( 0, 10 );
+	fs.writeFile( './gulpfiledata.json', JSON.stringify( dataJson ), function( err ) {
+		if ( err ) {
+			return console.log( err );
+		}
+	});
+});
 
+//pug
 gulp.task('pug', function() {
   return gulp.src(srcPug)
       .pipe(pug({ pretty: true }))
@@ -182,8 +184,7 @@ gulp.task('eslint:dist', function(){
 gulp.task('scripts:dist', function(){
   gulp.src(scriptsTemp)
   .pipe(plumber())
-  .pipe(eslint())
-  .pipe(eslint.format())
+
   .pipe(concat(destJSFile))
   .pipe(uglify())
   .pipe(gulp.dest(dist + 'js/'))
@@ -210,6 +211,6 @@ gulp.task('static', ['potFiles', 'pluginsjs', 'scripts:temp', 'fonts', 'images']
 gulp.task('build', ['styles:dev', 'scripts:dev', 'static']);
 
 // gulp minify all
-gulp.task('dist', ['scripts-cleanup', 'styles:dist', 'scripts:dist', 'static']);
+gulp.task('dist', ['scripts-cleanup', 'set-dataJson', 'styles:dist', 'scripts:dist', 'static']);
 // dev default tasks
 gulp.task('default', ['build', 'serve']);
