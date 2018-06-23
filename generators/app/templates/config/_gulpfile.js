@@ -201,7 +201,6 @@ gulp.task('serve', function(){
   gulp.watch(src + 'scss/**/*.scss', ['styles:dev']);
   gulp.watch(src + 'js/**/*.js', ['scripts:temp']);
   gulp.watch(src + 'temp/**/*.js', ['scripts:dev']).on('change', reload);
-  gulp.watch(srcPug, ['pug']).on('change', reload);
   gulp.watch('./**/*.php').on('change', reload);
 });
 

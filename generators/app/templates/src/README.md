@@ -20,6 +20,15 @@ gulp dist
 
 ```
 
+Compilar archivos *PUG*
+Se usa la tarea pug debido a que este proceso es muy pesado para hacerlo de modo síncrono.
+Despues de escribir tu codigo pug generarlo con el siguiente comando.
+
+```sh
+gulp pug
+
+```
+
 ### Error común en gulp resueltos
 
 Error: watch ENOSPC
