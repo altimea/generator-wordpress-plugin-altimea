@@ -25,11 +25,10 @@
     "jshint": "^2.9.4",
     "gulp-pug": "^3.3.0",
     "gulp-rename": "^1.2.2",
-    "gulp-babel": "^7.0.1",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "bourbon": "^4.3.4"
   }
 }
