@@ -42,32 +42,34 @@ var gulp = require('gulp'),
 	wpPot = require('gulp-wp-pot'),
 	crypto = require('crypto'),
 	fs = require('fs'),
-	mymd5 = require('./node_modules_third/gulp-mymd5/index.js'),
-	rename = require('gulp-rename'),
-	pug = require('gulp-pug'),
-	dataJson = {
+  mymd5 = require('./node_modules_third/gulp-mymd5/index.js'),
+  rename = require('gulp-rename'),
+  pug = require('gulp-pug'),
+  dataJson = {
 		'md5': ''
 	};
 
-gulp.task('scripts-cleanup', function () {
-	del.sync([dist], {force: true});
-});
+  gulp.task('scripts-cleanup', function () {
+    del.sync([dist], {force: true});
+  });
+  
+  /**
+   * task execute
+   * this create a file with data json
+   * create variable hash to production
+  */
+  gulp.task( 'set-dataJson', function() {
+    dataJson['md5'] = crypto.createHash( 'md5' ).update( Date.now().toString() ).digest( 'hex' ).slice( 0, 10 );
+    fs.writeFile( './gulpfiledata.json', JSON.stringify( dataJson ), function( err ) {
+      if ( err ) {
+        return console.log( err );
+      }
+    });
+  });
 
-/**
- * task execute
- * this create a file with data json
- * create variable hash to production
-*/
-gulp.task( 'set-dataJson', function() {
-	dataJson['md5'] = crypto.createHash( 'md5' ).update( Date.now().toString() ).digest( 'hex' ).slice( 0, 10 );
-	fs.writeFile( './gulpfiledata.json', JSON.stringify( dataJson ), function( err ) {
-		if ( err ) {
-			return console.log( err );
-		}
-	});
-});
-
+// tasks
 //pug
+
 gulp.task('pug', function() {
   return gulp.src(srcPug)
       .pipe(pug({ pretty: true }))
@@ -201,6 +203,7 @@ gulp.task('serve', function(){
   gulp.watch(src + 'scss/**/*.scss', ['styles:dev']);
   gulp.watch(src + 'js/**/*.js', ['scripts:temp']);
   gulp.watch(src + 'temp/**/*.js', ['scripts:dev']).on('change', reload);
+  gulp.watch(srcPug, ['pug']).on('change', reload);
   gulp.watch('./**/*.php').on('change', reload);
 });
 
