@@ -3,6 +3,11 @@
 
 ## Desarrollo frontend
 
+Tools frontend
+
+1. Bootstrap v4.1.1 (marco principal de trabajo)
+2. bourbon v4.3.4 (generar efecto al hacer scroll)
+
 Trabajar los estilos(scss), script, imgs y fonts en la carpeta src y usar los comandos de gulp
 * gulp build(compila los archivos de la carpeta src en modo desarrollo)
 * gulp (ejecuta la tarea gulp build + server de desarrollo)
@@ -20,6 +25,15 @@ gulp dist
 
 ```
 
+Compilar archivos *PUG*
+Se usa la tarea pug debido a que este proceso es muy pesado para hacerlo de modo síncrono.
+Despues de escribir tu codigo pug generarlo con el siguiente comando.
+
+```sh
+gulp pug
+
+```
+
 ### Error común en gulp resueltos
 
 Error: watch ENOSPC
@@ -30,51 +44,38 @@ sudo bash -c 'echo 524288 > /proc/sys/fs/inotify/max_user_watches'
 
 
 ## Sass utils core
-Use sass mixin responsive helpers file in `sass/mixin/_media_queries.scss`
 
-Example use `@include maxw(sm){};` for  `@media (max-width: 767px){};`
-
-Or use `@include minw(sm){};` for  `@media (min-width: 768px){};`
-
-#### Input sass example use mixin mq and style code sass for component
-
-Use BEM for write css: https://css-tricks.com/bem-101/
+#### Use breakpoints Bootsrap4.1.1
+[ver más documentación](https://getbootstrap.com/docs/4.1/layout/overview/#responsive-breakpoints)
 
 ```scss
 .my-component{
-    // use example props test
-    // props
-    &--dark{
-        // props
-    }
-    &__head{
-        // props
-    }
-    &__title{
-        // props
-    }
-    &__body{
-        // props
-    }
-    &__footer{
-        // props
-    }
     // use max-width
-    @include maxw(sm){
+    @include media-breakpoint-down(sm){
         // props
     }
-    @include maxw(xs){
+    @include media-breakpoint-down(xs){
         // props
         &__head{
             // props
         }
     }
-    // use max-width mq custom
-    @include maxw(360px){
+    // use min-width
+    @include media-breakpoint-up(xs){
         // props
     }
-    // use min-width
-    @include minw(xs){
+}
+```
+
+#### Alternative for custom breakpoints: Input sass example use mixin mq and style code sass for component
+
+Use sass mixin responsive helpers file in `sass/mixin/_media_queries.scss`
+Use BEM for write css: https://css-tricks.com/bem-101/
+
+```scss
+.my-component{
+    // use max-width mq custom
+    @include maxw(360px){
         // props
     }
     // use min-width mq custom
@@ -84,49 +85,7 @@ Use BEM for write css: https://css-tricks.com/bem-101/
 }
 ```
 
-#### Output css
-```css
-.my-component {
-    // props
-}
-.my-component__head {
-    // props
-}
-.my-component__title {
-    // props
-}
-.my-component__body {
-    // props
-}
-.my-component__footer {
-    // props
-}
-
-@media (min-width: 360px) {
-  .my-component {
-    // props
-  }
-}
-
-@media (max-width: 767px) {
-    .my-component{
-        // props
-    }
-}
-...
-
-// And more props define media queries...
-
-```
-
-#### Existing mixin media queries:
-Mixin `maxw($breakpoint)` with parameters **lg** = 1289px , **md** = 1041px , **sm** = 767px , **xs** = 575px.
-
-Example `@include maxw(md){...};`  output  `@media (max-width: 1041px){...};`
-
-Mixin `minw($breakpoint)` with parameters **lg** = 1290px , **md** = 1042px , **sm** = 768px , **xs** = 576px.
-
-Example `@include minw(sm){...};`  output  `@media (max-width: 768px){...};`<% } %><% if (includeAdmin) { %>
+} %><% if (includeAdmin) { %>
 
 ## Desarrollo backend
 Agregar variables de configuración en `wp-config.php`  
