@@ -19,3 +19,4 @@ node_modules
 src/temp
 package-lock.json
 yarn.lock
+.idea

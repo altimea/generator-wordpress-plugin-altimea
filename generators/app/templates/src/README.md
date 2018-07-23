@@ -1,5 +1,7 @@
 
-# <%= pretty_name %><% if (includePublic) { %>
+# <%= pretty_name %>
+
+<% if (includePublic) { %>
 
 ## Desarrollo frontend
 
@@ -85,13 +87,17 @@ Use BEM for write css: https://css-tricks.com/bem-101/
 }
 ```
 
-} %><% if (includeAdmin) { %>
+<% } %>
+
+<% if (includeAdmin) { %>
 
 ## Desarrollo backend
 Agregar variables de configuración en `wp-config.php`  
 variables necesarias
 
-	define('WP_ENV', 'dev');<% } %>
+	define('WP_ENV', 'dev');
+	
+<% } %>
 
 ## Contributors
 @Altimea
